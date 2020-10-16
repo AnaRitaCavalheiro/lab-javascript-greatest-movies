@@ -23,18 +23,62 @@ let ratesAverage = (movies) => {
         if (!movie.rate) {
             movie.rate = 0;
         }
+
+        let reduceSum = movies.reduce((accumulater, currentValue) => {
+            if(!movie.rate) {
+                movie.rate = 0;
+            }
+            return accumulater + currentValue.rate;
+        }, 0);
         totalSum += movie.rate;
     });
 
     let average = totalSum / movies.length;
     return Number(average.toFixed(2)); // to fixed converts strings to numbers
-}
+};
 
 // Iteration 4: Drama movies - Get the average of Drama Movies
+let dramaMoviesRate = (movies) => {
+    let dramaMovies = movies.filter( movie => movie.genre.includes('Drama'));
+    return ratesAverage(dramaMovies);
+};
+
 
 // Iteration 5: Ordering by year - Order by year, ascending (in growing order)
 
+let orderByYear = (movies) => {
+    let orderMovie = movies.sort((movie1, movie2) => {
+        if (movie1.year === movie2.year) {
+            if ( movie1.title > movie2.title){ 
+            return 1;
+        } else {
+            return -1;
+        
+        } } else {
+            if (movie1.year > movie2.year) {
+                return 1;
+            } else {
+                return -1;
+            }
+        }
+});
+// spread operator >>> cria um novo array ---> usa "..."
+return  [... orderMovie];
+}
 // Iteration 6: Alphabetic Order - Order by title and print the first 20 titles
+
+const orderAlphabetically = (movies) => {
+    let orderedArray = [...movies].sort ((movie1, movie2) => {
+        if (movie1.title > movie2.title) {
+            return 1;
+        } else {
+            return -1;
+        }
+    }).slice( 0, 20); 
+    // corta o array dando apenas os que estão dentro das "()"
+    return orderedArray.map(movie => movie.title);
+}
+
 
 // BONUS - Iteration 7: Time Format - Turn duration of the movies from hours to minutes
 
